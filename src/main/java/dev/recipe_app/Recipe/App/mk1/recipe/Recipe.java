@@ -1,9 +1,9 @@
-package recipe;
+package dev.recipe_app.Recipe.App.mk1.recipe;
 
 import java.time.LocalDateTime;
 
 public record Recipe(
-    Integer id,
+    Integer recipe_id,
     String name,
     String description,
     String ingredients,
