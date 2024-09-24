@@ -1,13 +1,44 @@
 package dev.recipe_app.Recipe.App.mk1.recipe;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/recipes")
 public class RecipeController {
 
-    @GetMapping("/home")
-    String home() {
-        return "Hello World from Recipe App";
+    private final RecipeRepository recipeRepository;
+
+    public RecipeController(RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
     }
+
+    @GetMapping("")
+    List<Recipe> findAll() {
+        return recipeRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    Recipe findById(@PathVariable Integer id) {
+        Optional<Recipe> recipe = recipeRepository.findById(id);
+        if(recipe.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return recipe.get();
+    }
+
+    // post
+
+    // put
+
+    // delete
+    
+
 }

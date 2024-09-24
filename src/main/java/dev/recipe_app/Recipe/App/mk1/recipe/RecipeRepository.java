@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RecipeRepository {
@@ -14,6 +15,16 @@ public class RecipeRepository {
     
     List<Recipe> findAll() {
         return recipes;
+    }
+
+    Optional<Recipe> findById(Integer id) {
+        return recipes.stream()
+                .filter(recipe -> recipe.recipe_id() == id)
+                .findFirst();
+    }
+
+    void create(Recipe recipe) {
+        recipes.add(recipe);
     }
     
     @PostConstruct
@@ -36,5 +47,6 @@ public class RecipeRepository {
                 1,
                 LocalDateTime.now()));
     }
-    
+
+
 }
